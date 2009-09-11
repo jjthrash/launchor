@@ -1,0 +1,34 @@
+<project name="Launchor" default="build" basedir=".">
+    <!-- set global properties for this build -->
+    <property name="src" location="src"/>
+    <property name="build" location="build"/>
+    <property file="build.properties"/>
+
+    <taskdef resource="bb-ant-defs.xml"/>
+
+    <target name="sign" depends="build">
+        <sigtool password="${sigtool.password}">
+            <cod>
+                <pathelement location="launchor.cod"/>
+            </cod>
+        </sigtool>
+    </target>
+
+    <target name="build">
+        <mkdir dir="${build}"/>
+        <rapc output="launchor" quiet="true">
+            <jdp type="cldc"
+                 title="Launchor"
+                 icon="res/icon.png"
+                 vendor="Jimmy Thrasher"
+                 version="0.1"/>
+            <src>
+                <fileset dir="${src}">
+                    <include name="com/jimmythrasher/**/*.java"/>
+                    <exclude name="**/*Test.java"/>
+                    <exclude name="**/AllTests.java"/>
+                </fileset>
+            </src>
+        </rapc>
+    </target>
+</project>
