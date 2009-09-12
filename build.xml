@@ -7,11 +7,8 @@
     <taskdef resource="bb-ant-defs.xml"/>
 
     <target name="sign" depends="build">
-        <sigtool password="${sigtool.password}">
-            <cod>
-                <pathelement location="launchor.cod"/>
-            </cod>
-        </sigtool>
+        <sigtool password="${sigtool.password}"
+                 codfile="launchor.cod"/>
     </target>
 
     <target name="build">
