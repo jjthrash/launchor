@@ -23,14 +23,16 @@ class Main extends net.rim.device.api.ui.UiApplication {
 
     public Main() {
         Logger.addListener(new EventLoggerTraceListener(LOG_KEY, "Launchor"));
-        CodeModuleGroup[] groups = CodeModuleGroupManager.loadAll();
-        for (int i = 0; i < groups.length; i++) {
-            Logger.debug("Info", "Examining CodeModuleGroup " + groups[i].getFriendlyName());
-            Enumeration e = groups[i].getModules();
-            while (e.hasMoreElements()) {
-                Logger.debug("Info", "Module has type " + e.nextElement().getClass().getName());
-            }
-        }
+        //CodeModuleGroup[] groups = CodeModuleGroupManager.loadAll();
+        //for (int i = 0; i < groups.length; i++) {
+        //    Logger.debug("Info", "Examining CodeModuleGroup " + groups[i].getFriendlyName());
+        //    Enumeration e = groups[i].getModules();
+        //    while (e.hasMoreElements()) {
+        //        Logger.debug("Info", "Module has type " + e.nextElement().getClass().getName());
+        //    }
+        //}
+
+        pushScreen(new LaunchPopup());
     }
 
     public static void main(String[] args) {
