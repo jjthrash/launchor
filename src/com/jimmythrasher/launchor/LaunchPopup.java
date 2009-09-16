@@ -33,9 +33,10 @@ public class LaunchPopup extends PopupScreen {
     private class CommandEditField extends BasicEditField {
         public CommandEditField(String label, String text) {
             super(label, text);
+            Logger.debug(null, "Using CommandEditField");
         }
 
-        protected boolean keyDown(char key, int time) {
+        protected boolean keyChar(char key, int status, int time) {
             Logger.debug(null, "Got key: " + key);
             if (key == Characters.ENTER) {
                 Logger.debug(null, "It's Characters.ENTER!");
@@ -46,7 +47,7 @@ public class LaunchPopup extends PopupScreen {
                 return true;
             }
 
-            return super.keyDown(key, time);
+            return super.keyChar(key, status, time);
         }
     }
 
