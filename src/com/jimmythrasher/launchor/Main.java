@@ -27,10 +27,10 @@ class Main extends net.rim.device.api.ui.UiApplication {
         CodeModuleGroup[] groups = CodeModuleGroupManager.loadAll();
         for (int i = 0; i < groups.length; i++) {
             Logger.debug(null, "Examining CodeModuleGroup " + groups[i].getFriendlyName());
-            Enumeration e = groups[i].getModules();
-            while (e.hasMoreElements()) {
-                Logger.debug(null, "Module " + e.nextElement());
-            }
+            //Enumeration e = groups[i].getModules();
+            //while (e.hasMoreElements()) {
+            //    Logger.debug(null, "Module " + e.nextElement());
+            //}
         }
 
         this.popup = new LaunchPopup();
