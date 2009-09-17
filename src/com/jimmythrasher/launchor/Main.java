@@ -13,9 +13,14 @@ import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.component.ButtonField;
 
 import net.rim.device.api.system.CodeModuleGroup;
+import net.rim.device.api.system.CodeModuleManager;
+import net.rim.device.api.system.ApplicationManager;
+import net.rim.device.api.system.ApplicationDescriptor;
 import net.rim.device.api.system.CodeModuleGroupManager;
+import net.rim.device.api.system.ApplicationManagerException;
 
 import com.jimmythrasher.common.util.Logger;
+import com.jimmythrasher.common.util.CollectionUtil;
 import com.jimmythrasher.common.blackberry.util.EventLoggerTraceListener;
 
 class Main extends net.rim.device.api.ui.UiApplication {
@@ -24,21 +29,38 @@ class Main extends net.rim.device.api.ui.UiApplication {
     public Main() {
         Logger.addListener(new EventLoggerTraceListener(LOG_KEY, "Launchor"));
 
-        CodeModuleGroup[] groups = CodeModuleGroupManager.loadAll();
-        for (int i = 0; i < groups.length; i++) {
-            Logger.debug(null, "Examining CodeModuleGroup " + groups[i].getFriendlyName());
-            //Enumeration e = groups[i].getModules();
-            //while (e.hasMoreElements()) {
-            //    Logger.debug(null, "Module " + e.nextElement());
-            //}
+        this.applicationDescriptors = new Vector();
+
+        int[] handles = CodeModuleManager.getModuleHandles();
+        for (int i = 0; i < handles.length; i++) {
+            Logger.debug(null, "Examining code module with name " + CodeModuleManager.getModuleName(handles[i]));
+            ApplicationDescriptor[] descriptors = CodeModuleManager.getApplicationDescriptors(handles[i]);
+
+            if (descriptors == null)
+                Logger.debug(null, "Descriptors are null");
+            else
+                CollectionUtil.appendInto(this.applicationDescriptors, descriptors);
         }
 
         this.popup = new LaunchPopup();
         this.popup.setLaunchCommandListener(new LaunchPopup.Listener() {
             public void onCommand(String command) {
-                // CodeModuleGroup -> Modules -> Application Descriptors (has icon and name)
+                // CodeModuleManager -> Handles -> Application Descriptors (has icon and name)
                 // ApplicationManager can start an ApplicationDescriptor
                 Logger.debug(null, "Got command " + command);
+                Logger.debug(null, "Searching through " + Main.this.applicationDescriptors.size() + " descriptors");
+                Enumeration e = Main.this.applicationDescriptors.elements();
+                while (e.hasMoreElements()) {
+                    ApplicationDescriptor descriptor = (ApplicationDescriptor)e.nextElement();
+                    if (descriptor.getName().equalsIgnoreCase(command)) {
+                        try {
+                            ApplicationManager.getApplicationManager().runApplication(descriptor);
+                        }
+                        catch (ApplicationManagerException ex) {
+                            Logger.error("Caught ApplicationManagerException: " + ex);
+                        }
+                    }
+                }
             }
         });
     }
@@ -57,4 +79,6 @@ class Main extends net.rim.device.api.ui.UiApplication {
     }
 
     private LaunchPopup popup;
+
+    private Vector applicationDescriptors;
 }
