@@ -27,6 +27,7 @@ public class LaunchScreen extends FullScreen {
     }
 
     public boolean onClose() {
+        setText("");
         return true;
     }
 
