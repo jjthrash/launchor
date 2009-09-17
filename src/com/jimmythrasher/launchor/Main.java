@@ -36,6 +36,8 @@ class Main extends net.rim.device.api.ui.UiApplication {
         this.popup = new LaunchPopup();
         this.popup.setLaunchCommandListener(new LaunchPopup.Listener() {
             public void onCommand(String command) {
+                // CodeModuleGroup -> Modules -> Application Descriptors (has icon and name)
+                // ApplicationManager can start an ApplicationDescriptor
                 Logger.debug(null, "Got command " + command);
             }
         });
