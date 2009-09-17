@@ -61,6 +61,8 @@ class Main extends net.rim.device.api.ui.UiApplication {
                         }
                     }
                 }
+
+                dismissStatus(Main.this.popup);
             }
         });
     }
