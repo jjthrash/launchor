@@ -2,24 +2,28 @@ package com.jimmythrasher.launchor;
 
 import net.rim.device.api.system.Characters;
 
+import net.rim.device.api.ui.component.ListField;
 import net.rim.device.api.ui.component.EditField;
 import net.rim.device.api.ui.component.BasicEditField;
-import net.rim.device.api.ui.container.PopupScreen;
+import net.rim.device.api.ui.container.FullScreen;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 
 import com.jimmythrasher.common.util.Logger;
 
-public class LaunchPopup extends PopupScreen {
+public class LaunchScreen extends FullScreen {
     public static interface Listener {
         public void onCommand(String command);
     }
 
-    public LaunchPopup() {
-        super(new HorizontalFieldManager());
+    public LaunchScreen() {
+        super();
 
         this.commandField = new CommandEditField("Command: ", "");
 
+        this.commandList = new ListField();
+
         add(this.commandField);
+        add(this.commandList);
     }
 
     public boolean onClose() {
@@ -42,8 +46,8 @@ public class LaunchPopup extends PopupScreen {
                 Logger.debug(null, "It's Characters.ENTER!");
                 String text = getText();
                 setText("");
-                if (LaunchPopup.this.listener != null)
-                    LaunchPopup.this.listener.onCommand(text);
+                if (LaunchScreen.this.listener != null)
+                    LaunchScreen.this.listener.onCommand(text);
                 return true;
             }
 
@@ -52,5 +56,6 @@ public class LaunchPopup extends PopupScreen {
     }
 
     private CommandEditField commandField;
+    private ListField commandList;
     private Listener listener;
 }

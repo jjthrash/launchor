@@ -42,8 +42,8 @@ class Main extends net.rim.device.api.ui.UiApplication {
                 CollectionUtil.appendInto(this.applicationDescriptors, descriptors);
         }
 
-        this.popup = new LaunchPopup();
-        this.popup.setLaunchCommandListener(new LaunchPopup.Listener() {
+        this.launchScreen = new LaunchScreen();
+        this.launchScreen.setLaunchCommandListener(new LaunchScreen.Listener() {
             public void onCommand(String command) {
                 // CodeModuleManager -> Handles -> Application Descriptors (has icon and name)
                 // ApplicationManager can start an ApplicationDescriptor
@@ -62,17 +62,17 @@ class Main extends net.rim.device.api.ui.UiApplication {
                     }
                 }
 
-                dismissStatus(Main.this.popup);
+                dismissStatus(Main.this.launchScreen);
             }
         });
     }
 
     public void activate() {
-        pushGlobalScreen(this.popup, 1, true);
+        pushGlobalScreen(this.launchScreen, 1, true);
     }
 
     public void deactivate() {
-        dismissStatus(this.popup);
+        dismissStatus(this.launchScreen);
     }
 
     public static void main(String[] args) {
@@ -80,7 +80,7 @@ class Main extends net.rim.device.api.ui.UiApplication {
         instance.enterEventDispatcher();
     }
 
-    private LaunchPopup popup;
+    private LaunchScreen launchScreen;
 
     private Vector applicationDescriptors;
 }
