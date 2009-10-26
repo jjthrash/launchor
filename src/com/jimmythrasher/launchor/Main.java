@@ -52,7 +52,7 @@ class Main extends net.rim.device.api.ui.UiApplication {
                 Enumeration e = Main.this.applicationDescriptors.elements();
                 while (e.hasMoreElements()) {
                     ApplicationDescriptor descriptor = (ApplicationDescriptor)e.nextElement();
-                    if (descriptor.getName().equalsIgnoreCase(command)) {
+                    if (descriptor.getName().toLowerCase().startsWith(command.toLowerCase())) {
                         try {
                             ApplicationManager.getApplicationManager().runApplication(descriptor);
                         }
