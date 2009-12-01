@@ -37,15 +37,6 @@ public class Logger {
         return categories;
     }
 
-    /**
-     * @deprecated Please use debug(String, String) instead
-     */
-    public static void log(Object o, String method, String message, int level) {
-        String name = o.getClass().getName();
-        name = name.substring(name.lastIndexOf('.') + 1);
-        log("" + name + "::" + method + " - " + message);
-    }
-
     public static void error(String message) {
         doMessage(message, ERROR);
     }
@@ -72,20 +63,6 @@ public class Logger {
             throw new RuntimeException(message);
         }
         catch (Throwable t) { }
-    }
-
-    /**
-     * @deprecated Please use debug(String, String) instead.
-     */
-    public static void log(String message) {
-        debug("Common", message);
-    }
-
-    /**
-     * @deprecated Please use debug(String, String) instead.
-     */
-    public static void log(String category, String message) {
-        debug(category, message);
     }
 
     private static void doMessage(String message, int level) {
