@@ -70,14 +70,14 @@ class Main extends net.rim.device.api.ui.UiApplication {
                 System.exit(0);
             }
         });
+
+        pushScreen(this.launchScreen);
     }
 
     public void activate() {
-        pushGlobalScreen(this.launchScreen, 1, true);
     }
 
     public void deactivate() {
-        dismissStatus(this.launchScreen);
     }
 
     public static void main(String[] args) {
