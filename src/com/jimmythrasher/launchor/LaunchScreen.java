@@ -25,9 +25,9 @@ public class LaunchScreen extends FullScreen {
 
         this.commandList = new CommandList(commands);
         this.commandListField = new KeywordFilterField();
-        this.commandListField.setLabel("Launch: ");
 
         this.commandListField.setSourceList(this.commandList, this.commandList);
+        this.commandListField.setKeywordField(new CommandEditField("Launch: ", ""));
 
         add(this.commandListField.getKeywordField());
         add(this.commandListField);
@@ -52,7 +52,7 @@ public class LaunchScreen extends FullScreen {
             Logger.debug(null, "Got key: " + key);
             if (key == Characters.ENTER) {
                 Logger.debug(null, "It's Characters.ENTER!");
-                String text = null;
+                String text = (String)commandListField.getSelectedElement();
                 setText("");
                 if (LaunchScreen.this.listener != null)
                     LaunchScreen.this.listener.onCommand(text);

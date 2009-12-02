@@ -67,7 +67,7 @@ class Main extends net.rim.device.api.ui.UiApplication {
                     }
                 }
 
-                dismissStatus(Main.this.launchScreen);
+                System.exit(0);
             }
         });
     }
