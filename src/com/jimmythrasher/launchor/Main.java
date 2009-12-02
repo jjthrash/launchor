@@ -42,7 +42,12 @@ class Main extends net.rim.device.api.ui.UiApplication {
                 CollectionUtil.appendInto(this.applicationDescriptors, descriptors);
         }
 
-        this.launchScreen = new LaunchScreen();
+        this.launchScreen = new LaunchScreen(CollectionUtil.collect(new CollectionUtil.ObjectBlock() {
+            public Object op(Object element) {
+                return ((ApplicationDescriptor)element).getName();
+            }
+        }, this.applicationDescriptors));
+
         this.launchScreen.setLaunchCommandListener(new LaunchScreen.Listener() {
             public void onCommand(String command) {
                 // CodeModuleManager -> Handles -> Application Descriptors (has icon and name)

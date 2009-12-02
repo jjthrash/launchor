@@ -1,33 +1,40 @@
 package com.jimmythrasher.launchor;
 
+import java.util.*;
+
 import net.rim.device.api.system.Characters;
 
-import net.rim.device.api.ui.component.ListField;
-import net.rim.device.api.ui.component.EditField;
-import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.collection.ReadableList;
+
 import net.rim.device.api.ui.container.FullScreen;
+import net.rim.device.api.ui.component.BasicEditField;
+import net.rim.device.api.ui.component.KeywordProvider;
+import net.rim.device.api.ui.component.KeywordFilterField;
 import net.rim.device.api.ui.container.HorizontalFieldManager;
 
 import com.jimmythrasher.common.util.Logger;
+import com.jimmythrasher.common.util.CollectionUtil;
 
 public class LaunchScreen extends FullScreen {
     public static interface Listener {
         public void onCommand(String command);
     }
 
-    public LaunchScreen() {
+    public LaunchScreen(final Vector commands) {
         super();
 
-        this.commandField = new CommandEditField("Command: ", "");
+        this.commandList = new CommandList(commands);
+        this.commandListField = new KeywordFilterField();
+        this.commandListField.setLabel("Launch: ");
 
-        this.commandList = new ListField();
+        this.commandListField.setSourceList(this.commandList, this.commandList);
 
-        add(this.commandField);
-        add(this.commandList);
+        add(this.commandListField.getKeywordField());
+        add(this.commandListField);
     }
 
     public boolean onClose() {
-        setText("");
+        setDirty(false);
         return true;
     }
 
@@ -45,7 +52,7 @@ public class LaunchScreen extends FullScreen {
             Logger.debug(null, "Got key: " + key);
             if (key == Characters.ENTER) {
                 Logger.debug(null, "It's Characters.ENTER!");
-                String text = getText();
+                String text = null;
                 setText("");
                 if (LaunchScreen.this.listener != null)
                     LaunchScreen.this.listener.onCommand(text);
@@ -56,7 +63,7 @@ public class LaunchScreen extends FullScreen {
         }
     }
 
-    private CommandEditField commandField;
-    private ListField commandList;
-    private Listener listener;
+    private CommandList        commandList;
+    private KeywordFilterField commandListField;
+    private Listener           listener;
 }

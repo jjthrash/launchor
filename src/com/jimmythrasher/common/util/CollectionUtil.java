@@ -98,4 +98,16 @@ public class CollectionUtil {
             result.addElement(b.op(e.nextElement()));
         return result;
     }
+
+    public static Vector filter(ObjectBlock b, Vector v) {
+        Vector result = new Vector();
+        Enumeration e = v.elements();
+        while (e.hasMoreElements()) {
+            Object element = e.nextElement();
+            if (((Boolean)b.op(element)).booleanValue())
+                result.addElement(element);
+        }
+
+        return result;
+    }
 }
