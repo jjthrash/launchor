@@ -6,7 +6,7 @@ import net.rim.device.api.system.Characters;
 
 import net.rim.device.api.collection.ReadableList;
 
-import net.rim.device.api.ui.container.FullScreen;
+import net.rim.device.api.ui.container.MainScreen;
 import net.rim.device.api.ui.component.BasicEditField;
 import net.rim.device.api.ui.component.KeywordProvider;
 import net.rim.device.api.ui.component.KeywordFilterField;
@@ -15,7 +15,7 @@ import net.rim.device.api.ui.container.HorizontalFieldManager;
 import com.jimmythrasher.common.util.Logger;
 import com.jimmythrasher.common.util.CollectionUtil;
 
-public class LaunchScreen extends FullScreen {
+public class LaunchScreen extends MainScreen {
     public static interface Listener {
         public void onCommand(String command);
     }
@@ -35,7 +35,7 @@ public class LaunchScreen extends FullScreen {
 
     public boolean onClose() {
         setDirty(false);
-        return true;
+        return super.onClose();
     }
 
     public void setLaunchCommandListener(Listener listener) {
